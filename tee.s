@@ -4,7 +4,7 @@
 * Itagaki Fumihiko 19-Feb-93  Zap.
 * 1.0
 *
-* Usage: tee [ -aiZ ] [ <ƒtƒ@ƒCƒ‹> ] ...
+* Usage: tee [ -aiZ ] [ <ãƒ•ã‚¡ã‚¤ãƒ«> ] ...
 *
 
 .include doscall.h
@@ -16,7 +16,7 @@
 .xref strfor1
 .xref strip_excessive_slashes
 
-REQUIRED_OSVER	equ	$200			*  2.00ˆÈ~
+REQUIRED_OSVER	equ	$200			*  2.00ä»¥é™
 
 STACKSIZE	equ	2048
 
@@ -35,7 +35,7 @@ start:
 		dc.b	'#HUPAIR',0
 start1:
 		lea	stack(pc),a7
-		lea	$10(a0),a0			*  A0 : PDBƒAƒhƒŒƒX
+		lea	$10(a0),a0			*  A0 : PDBã‚¢ãƒ‰ãƒ¬ã‚¹
 		move.l	a7,d0
 		sub.l	a0,d0
 		move.l	d0,-(a7)
@@ -46,23 +46,23 @@ start1:
 		move.w	#-1,breakflag
 		move.l	#-1,input
 	*
-	*  ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚ğŠm•Û‚·‚é
+	*  å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã‚’ç¢ºä¿ã™ã‚‹
 	*
-		lea	1(a2),a0			*  A0 := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ìæ“ªƒAƒhƒŒƒX
-		bsr	strlen				*  D0.L := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶š—ñ‚Ì’·‚³
+		lea	1(a2),a0			*  A0 := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+		bsr	strlen				*  D0.L := ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®é•·ã•
 		addq.l	#1,d0
 		bsr	malloc
 		bmi	insufficient_memory
 
-		movea.l	d0,a1				*  A1 := ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚Ìæ“ªƒAƒhƒŒƒX
+		movea.l	d0,a1				*  A1 := å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 	*
-	*  ˆø”‚ğƒfƒR[ƒh‚µC‰ğß‚·‚é
+	*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ï¼Œè§£é‡ˆã™ã‚‹
 	*
 		bsr	DecodeHUPAIR
-		movea.l	a1,a0				*  A0 : ˆø”ƒ|ƒCƒ“ƒ^
-		move.l	d0,d7				*  D7.L : ˆø”ƒJƒEƒ“ƒ^
-		moveq	#0,d6				*  D6.W : ƒGƒ‰[EƒR[ƒh
-		moveq	#0,d5				*  D5.L : ƒtƒ‰ƒO
+		movea.l	a1,a0				*  A0 : å¼•æ•°ãƒã‚¤ãƒ³ã‚¿
+		move.l	d0,d7				*  D7.L : å¼•æ•°ã‚«ã‚¦ãƒ³ã‚¿
+		moveq	#0,d6				*  D6.W : ã‚¨ãƒ©ãƒ¼ãƒ»ã‚³ãƒ¼ãƒ‰
+		moveq	#0,d5				*  D5.L : ãƒ•ãƒ©ã‚°
 decode_opt_loop1:
 		tst.l	d7
 		beq	decode_opt_done
@@ -146,21 +146,21 @@ breakck:
 
 decode_opt_done:
 	*
-	*  “ü—Í‚ğƒI[ƒvƒ“‚·‚é
+	*  å…¥åŠ›ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹
 	*
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		DOS	_DUP				*  •¡»‚µ‚½ƒnƒ“ƒhƒ‹‚©‚ç“ü—Í‚µC
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		DOS	_DUP				*  è¤‡è£½ã—ãŸãƒãƒ³ãƒ‰ãƒ«ã‹ã‚‰å…¥åŠ›ã—ï¼Œ
 		addq.l	#2,a7
 		move.l	d0,input
 		bmi	open_fail
 
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		DOS	_CLOSE				*  ƒNƒ[ƒY‚·‚éD
-		addq.l	#2,a7				*  ‚±‚¤‚µ‚È‚¢‚Æ ^C ‚â ^S ‚ªŒø‚©‚È‚¢
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		DOS	_CLOSE				*  ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
+		addq.l	#2,a7				*  ã“ã†ã—ãªã„ã¨ ^C ã‚„ ^S ãŒåŠ¹ã‹ãªã„
 	*
-	*  o—ÍƒfƒXƒNƒŠƒvƒ^ƒe[ƒuƒ‹‚ğŠm•Û‚·‚é
+	*  å‡ºåŠ›ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ç¢ºä¿ã™ã‚‹
 	*
-		move.l	d7,d0				*  D7.L : o—Íƒtƒ@ƒCƒ‹”-1
+		move.l	d7,d0				*  D7.L : å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«æ•°-1
 		addq.l	#1,d0
 		lsl.l	#3,d0				*  x8
 		bsr	malloc
@@ -179,7 +179,7 @@ open_file_loop:
 		movea.l	a0,a1
 		bsr	strfor1
 		exg	a0,a1
-		sf	d4				*  D4=0 : ƒAƒyƒ“ƒh‚µ‚È‚¢
+		sf	d4				*  D4=0 : ã‚¢ãƒšãƒ³ãƒ‰ã—ãªã„
 		moveq	#1,d0				*  1 ... stdout
 		cmpi.b	#'-',(a0)
 		bne	open_file
@@ -188,35 +188,35 @@ open_file_loop:
 		beq	file_ok_1
 open_file:
 		bsr	strip_excessive_slashes
-		clr.w	-(a7)				*  ‚Ü‚¸“Ç‚İ‚İƒ‚[ƒh‚Å
-		move.l	a0,-(a7)			*  o—Íæƒtƒ@ƒCƒ‹‚ğ
-		DOS	_OPEN				*  ƒI[ƒvƒ“‚µ‚Ä‚İ‚é
+		clr.w	-(a7)				*  ã¾ãšèª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§
+		move.l	a0,-(a7)			*  å‡ºåŠ›å…ˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+		DOS	_OPEN				*  ã‚ªãƒ¼ãƒ—ãƒ³ã—ã¦ã¿ã‚‹
 		addq.l	#6,a7
 		move.l	d0,d2
 		bmi	do_create_file
 
 		bsr	check_device
-		and.w	#$80,d0				*  ƒLƒƒƒ‰ƒNƒ^ƒfƒoƒCƒX‚©‚Ç‚¤‚©
+		and.w	#$80,d0				*  ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ‡ãƒã‚¤ã‚¹ã‹ã©ã†ã‹
 		move.w	d0,-(a7)
 		move.w	d2,-(a7)
 		DOS	_CLOSE
 		addq.l	#2,a7
-		tst.w	(a7)+				*  ƒLƒƒƒ‰ƒNƒ^EƒfƒoƒCƒX‚È‚ç‚Î
-		bne	do_open_file			*  @ƒI[ƒvƒ“‚·‚éiV‹Kì¬‚µ‚È‚¢j
+		tst.w	(a7)+				*  ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ãƒã‚¤ã‚¹ãªã‚‰ã°
+		bne	do_open_file			*  ã€€ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹ï¼ˆæ–°è¦ä½œæˆã—ãªã„ï¼‰
 
 		btst	#FLAG_a,d5
-		sne	d4				*  D4.B : ƒAƒyƒ“ƒhƒtƒ‰ƒO  ƒAƒyƒ“ƒh‚È‚ç‚Î
-		bne	do_open_file			*    ƒI[ƒvƒ“‚·‚éiV‹Kì¬‚µ‚È‚¢j
+		sne	d4				*  D4.B : ã‚¢ãƒšãƒ³ãƒ‰ãƒ•ãƒ©ã‚°  ã‚¢ãƒšãƒ³ãƒ‰ãªã‚‰ã°
+		bne	do_open_file			*    ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹ï¼ˆæ–°è¦ä½œæˆã—ãªã„ï¼‰
 do_create_file:
-		move.w	#$20,-(a7)			*  ’Êí‚Ìƒtƒ@ƒCƒ‹ƒ‚[ƒh‚Å
-		move.l	a0,-(a7)			*  o—Íæƒtƒ@ƒCƒ‹‚ğ
-		DOS	_CREATE				*  V‹Kì¬‚·‚é
+		move.w	#$20,-(a7)			*  é€šå¸¸ã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ¢ãƒ¼ãƒ‰ã§
+		move.l	a0,-(a7)			*  å‡ºåŠ›å…ˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+		DOS	_CREATE				*  æ–°è¦ä½œæˆã™ã‚‹
 		bra	file_opened
 
 do_open_file:
-		move.w	#1,-(a7)			*  ‘‚«‚İƒ‚[ƒh‚Å
-		move.l	a0,-(a7)			*  o—Íæƒtƒ@ƒCƒ‹‚ğ
-		DOS	_OPEN				*  ƒI[ƒvƒ“‚·‚é
+		move.w	#1,-(a7)			*  æ›¸ãè¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã§
+		move.l	a0,-(a7)			*  å‡ºåŠ›å…ˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’
+		DOS	_OPEN				*  ã‚ªãƒ¼ãƒ—ãƒ³ã™ã‚‹
 file_opened:
 		addq.l	#6,a7
 file_ok_1:
@@ -241,13 +241,13 @@ file_ok_2:
 		beq	open_file_done_one
 
 		bsr	check_device
-		btst	#7,d0				* ƒLƒƒƒ‰ƒNƒ^EƒfƒoƒCƒX
-		bne	open_file_done_one		*   ‚È‚ç‚ÎƒV[ƒN‚µ‚È‚¢
+		btst	#7,d0				* ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ãƒã‚¤ã‚¹
+		bne	open_file_done_one		*   ãªã‚‰ã°ã‚·ãƒ¼ã‚¯ã—ãªã„
 
 		move.w	#2,-(a7)			* EOF
-		clr.l	-(a7)				* @‚Ü‚Å
-		move.w	d2,-(a7)			* @o—Í‚ğ
-		DOS	_SEEK				* @ƒV[ƒN‚·‚é
+		clr.l	-(a7)				* ã€€ã¾ã§
+		move.w	d2,-(a7)			* ã€€å‡ºåŠ›ã‚’
+		DOS	_SEEK				* ã€€ã‚·ãƒ¼ã‚¯ã™ã‚‹
 		addq.l	#8,a7
 open_file_done_one:
 		movea.l	a1,a0
@@ -281,7 +281,7 @@ tee_loop:
 		move.l	d0,d3
 		bmi	read_fail
 .if 0
-		beq	tee_done	* i‚±‚±‚ÅI‚í‚ç‚È‚­‚Ä‚à‰º‚ÅI‚í‚Á‚Ä‚­‚ê‚éj
+		beq	tee_done	* ï¼ˆã“ã“ã§çµ‚ã‚ã‚‰ãªãã¦ã‚‚ä¸‹ã§çµ‚ã‚ã£ã¦ãã‚Œã‚‹ï¼‰
 .endif
 
 		sf	d4				* D4.B : EOF flag
@@ -347,10 +347,10 @@ exit_program_1:
 		move.l	input,d0
 		bmi	exit_program_2
 
-		clr.w	-(a7)				*  •W€“ü—Í‚ğ
-		move.w	d0,-(a7)			*  Œ³‚É
-		DOS	_DUP2				*  –ß‚·D
-		DOS	_CLOSE				*  •¡»‚ÍƒNƒ[ƒY‚·‚éD
+		clr.w	-(a7)				*  æ¨™æº–å…¥åŠ›ã‚’
+		move.w	d0,-(a7)			*  å…ƒã«
+		DOS	_DUP2				*  æˆ»ã™ï¼
+		DOS	_CLOSE				*  è¤‡è£½ã¯ã‚¯ãƒ­ãƒ¼ã‚ºã™ã‚‹ï¼
 exit_program_2:
 		move.w	d6,-(a7)
 		DOS	_EXIT2
@@ -466,14 +466,14 @@ check_device:
 	dc.b	'## tee 1.0 ##  Copyright(C)1991,93 by Itagaki Fumihiko',0
 
 msg_myname:		dc.b	'tee: ',0
-msg_no_memory:		dc.b	'ƒƒ‚ƒŠ‚ª‘«‚è‚Ü‚¹‚ñ',CR,LF,0
-msg_read_fail:		dc.b	'“ü—ÍƒGƒ‰[',CR,LF,0
-msg_open_fail:		dc.b	'•W€“ü—Í‚ğƒI[ƒvƒ“‚Å‚«‚Ü‚¹‚ñ',CR,LF,0
-msg_create_fail:	dc.b	': ì¬‚Å‚«‚Ü‚¹‚ñ',CR,LF,0
-msg_write_fail:		dc.b	': o—ÍƒGƒ‰[',CR,LF,0
-msg_illegal_option:	dc.b	'•s³‚ÈƒIƒvƒVƒ‡ƒ“ -- ',0
-msg_usage:		dc.b	CR,LF,'g—p–@:  tee [ -aiZ ] [ <ƒtƒ@ƒCƒ‹> ] ...',CR,LF,0
-word_stdout:		dc.b	'- •W€o—Í -',0
+msg_no_memory:		dc.b	'ãƒ¡ãƒ¢ãƒªãŒè¶³ã‚Šã¾ã›ã‚“',CR,LF,0
+msg_read_fail:		dc.b	'å…¥åŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_open_fail:		dc.b	'æ¨™æº–å…¥åŠ›ã‚’ã‚ªãƒ¼ãƒ—ãƒ³ã§ãã¾ã›ã‚“',CR,LF,0
+msg_create_fail:	dc.b	': ä½œæˆã§ãã¾ã›ã‚“',CR,LF,0
+msg_write_fail:		dc.b	': å‡ºåŠ›ã‚¨ãƒ©ãƒ¼',CR,LF,0
+msg_illegal_option:	dc.b	'ä¸æ­£ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ -- ',0
+msg_usage:		dc.b	CR,LF,'ä½¿ç”¨æ³•:  tee [ -aiZ ] [ <ãƒ•ã‚¡ã‚¤ãƒ«> ] ...',CR,LF,0
+word_stdout:		dc.b	'- æ¨™æº–å‡ºåŠ› -',0
 *****************************************************************
 .bss
 .even
